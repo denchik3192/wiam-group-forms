@@ -1,29 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RootState, useAppDispatch } from '../store/store';
+import { getItems, setPersonalData } from '../store/slices/formSlice';
+import { getCategories } from '../api/formsAPI';
+import { useSelector } from 'react-redux';
 
-function PersonalDatatForm<any>({ state, dispatch }) {
+function PersonalDatatForm() {
+  const { personalData } = useSelector((state: RootState) => state.forms);
   const navigate = useNavigate();
-  console.log(state);
+  const dispatch = useAppDispatch();
+  const [phone, setPhone] = useState<string>(personalData.phone);
+  const [name, setName] = useState<string>(personalData.name);
+  const [lastName, setLastName] = useState<string>(personalData.lastName);
+  const [gender, setGender] = useState<string>(personalData.gender);
 
-  const [phone, setPhone] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [gender, setGender] = useState<string>('');
+  useEffect(() => {
+    // dispatch(getItems());
+  }, []);
 
   const handleSubmit = () => {
-    console.log(phone, name, lastName, gender);
-
-    dispatch({
-      type: 'set_personal_data',
-      phone: phone,
-      name: name,
-      lastName: lastName,
-      gender: gender,
-    });
+    dispatch(
+      setPersonalData({
+        phone: phone,
+        name: name,
+        lastName: lastName,
+        gender: gender,
+      }),
+    );
     navigate('adress-form');
   };
 
-  const handleInputChange = (e) => {
+  const handlePhoneInputChange = (e) => {
     let value = e.target.value.replace(/\D/g, '');
     if (phone === '') {
       value = '0' + value;
@@ -44,7 +51,7 @@ function PersonalDatatForm<any>({ state, dispatch }) {
           <div className="form-group" style={{ marginBottom: '10px' }}>
             <label htmlFor="exampleInputEmail1">Телефон</label>
             <input
-              onChange={handleInputChange}
+              onChange={handlePhoneInputChange}
               value={phone}
               type="tel"
               className="form-control"
@@ -61,6 +68,7 @@ function PersonalDatatForm<any>({ state, dispatch }) {
               className="form-control"
               id="exampleInputPassword1"
               placeholder="Имя"
+              value={name}
               onChange={(e) => {
                 setName(e.target.value);
               }}
@@ -74,6 +82,7 @@ function PersonalDatatForm<any>({ state, dispatch }) {
               className="form-control"
               id="lastname"
               placeholder="Фамилия"
+              value={lastName}
               onChange={(e) => {
                 setLastName(e.target.value);
               }}
@@ -83,11 +92,11 @@ function PersonalDatatForm<any>({ state, dispatch }) {
           <div className="form-group" style={{ marginBottom: '30px' }}>
             <label>Пол</label>
             <select
-              defaultValue="не выбрано"
               className="form-select"
               aria-label="Default select example"
               style={{ marginBottom: '20px' }}
               required
+              value={gender}
               onChange={(e) => {
                 setGender(e.target.value);
               }}>

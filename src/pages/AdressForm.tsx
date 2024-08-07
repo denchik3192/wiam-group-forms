@@ -1,25 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Loader from '../components/Loader';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../store/store';
+import { setAdressData } from '../store/slices/formSlice';
 
-function AdressForm({ state, dispatch, categories }) {
-  const [activeWorkPlace, setActiveWorkPlace] = useState<string>('');
-  const [adress, setAdress] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+function AdressForm() {
+  const { adressData } = useSelector((state: RootState) => state.forms);
+  const dispatch = useAppDispatch();
+  const [activeWorkPlace, setActiveWorkPlace] = useState<string>('beauty');
+  const [adress, setAdress] = useState<string>(adressData.adress);
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    dispatch({
-      type: 'set_adress',
-      workPlace: activeWorkPlace,
-      adress: adress,
-    });
-    navigate('adress-form');
+    dispatch(setAdressData({ workPlace: activeWorkPlace, adress: adress }));
+    navigate('loan-form');
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>
@@ -35,7 +30,7 @@ function AdressForm({ state, dispatch, categories }) {
               style={{ marginBottom: '20px' }}
               onChange={(e) => setActiveWorkPlace(e.target.value)}
               required>
-              {categories?.map((workplace: string, index: number) => (
+              {adressData.categories?.map((workplace: string, index: number) => (
                 <option key={index} value={workplace}>
                   {workplace}
                 </option>
@@ -50,22 +45,23 @@ function AdressForm({ state, dispatch, categories }) {
               className="form-control"
               id="adress"
               placeholder="Адрес проживания"
+              value={adress}
               onChange={(e) => setAdress(e.target.value)}
               required
             />
           </div>
-          <div className="button-block">
-            <Link to={'/'}>
-              <button type="submit" className="btn btn-secondary">
+          <div style={{ display: 'flex', justifyContent: 'space-between', flex: '0 1 auto' }}>
+            <Link to={'/'} style={{ width: '100%', marginLeft: '10px' }}>
+              <button type="submit" className="btn btn-secondary" style={{ width: '100%' }}>
                 Назад
               </button>
             </Link>
-            <Link to={'/loan-form'}>
+            <Link to={'/loan-form'} style={{ width: '100%', marginLeft: '10px' }}>
               <button
                 type="submit"
-                onClick={handleSubmit}
                 className="btn btn-primary"
-                style={{ width: '100%', marginLeft: '10px' }}>
+                style={{ width: '100%' }}
+                onClick={handleSubmit}>
                 Далее
               </button>
             </Link>

@@ -2,24 +2,14 @@ import { Route, Routes } from 'react-router';
 import PersonalDatatForm from '../pages/PersonalDatatForm';
 import LoanForm from '../pages/LoanForm';
 import AdressForm from '../pages/AdressForm';
-import { useForms } from '../hooks/useForms';
 
 function AppRouter() {
-  const { state, dispatch, categories, sendData, isSucsess } = useForms();
   return (
     <div>
       <Routes>
-        <Route path="/" element={<PersonalDatatForm state={state} dispatch={dispatch} />} />
-        <Route
-          path="/adress-form"
-          element={<AdressForm state={state} dispatch={dispatch} categories={categories} />}
-        />
-        <Route
-          path="/loan-form"
-          element={
-            <LoanForm state={state} dispatch={dispatch} sendData={sendData} isSucsess={isSucsess} />
-          }
-        />
+        <Route path="/" element={<PersonalDatatForm />} />
+        <Route path="/adress-form" element={<AdressForm />} />
+        <Route path="/loan-form" element={<LoanForm />} />
       </Routes>
     </div>
   );

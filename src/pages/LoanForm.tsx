@@ -1,20 +1,24 @@
 import { useState } from 'react';
 import Modal from '../components/modal';
+import { RootState, useAppDispatch } from '../store/store';
+import { useSelector } from 'react-redux';
+import { postForms, setLoan } from '../store/slices/formSlice';
 
-function LoanForm({ state, dispatch, sendData, isSucsess }) {
-  const [sum, setSum] = useState<number>(200);
-  const [period, setPeriod] = useState<number>(10);
+function LoanForm() {
+  const { loanData, personalData } = useSelector((state: RootState) => state.forms);
+  const dispatch = useAppDispatch();
+  const [sum, setSum] = useState<number>(loanData.loan);
+  const [period, setPeriod] = useState<number>(loanData.period);
+  console.log(loanData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    dispatch({ type: 'set_loan', loan: sum, period: period });
-    sendData();
+    dispatch(setLoan({ loan: sum, period: period }));
+    dispatch(postForms());
   };
 
   return (
     <>
-      {isSucsess && <Modal />}
       <div className="formWrapper">
         <h1>Параметры займа</h1>
         <form onSubmit={handleSubmit}>
