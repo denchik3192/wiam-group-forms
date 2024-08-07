@@ -5,7 +5,7 @@ import AdressForm from '../pages/AdressForm';
 import { useForms } from '../hooks/useForms';
 
 function AppRouter() {
-  const { state, dispatch, categories } = useForms();
+  const { state, dispatch, categories, sendData, isSucsess } = useForms();
   return (
     <div>
       <Routes>
@@ -14,7 +14,12 @@ function AppRouter() {
           path="/adress-form"
           element={<AdressForm state={state} dispatch={dispatch} categories={categories} />}
         />
-        <Route path="/loan-form" element={<LoanForm />} />
+        <Route
+          path="/loan-form"
+          element={
+            <LoanForm state={state} dispatch={dispatch} sendData={sendData} isSucsess={isSucsess} />
+          }
+        />
       </Routes>
     </div>
   );

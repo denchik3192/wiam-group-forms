@@ -1,13 +1,20 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Modal from '../components/modal';
 
-function LoanForm() {
+function LoanForm({ state, dispatch, sendData, isSucsess }) {
   const [sum, setSum] = useState<number>(200);
   const [period, setPeriod] = useState<number>(10);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch({ type: 'set_loan', loan: sum, period: period });
+    sendData();
+  };
+
   return (
     <>
+      {isSucsess && <Modal />}
       <div className="formWrapper">
         <h1>Параметры займа</h1>
         <form onSubmit={handleSubmit}>
@@ -48,14 +55,13 @@ function LoanForm() {
             />
             <span>{period}</span>
           </div>
-          <Link to={'#'}>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              style={{ width: '100%', height: '50px' }}>
-              Подать заявку
-            </button>
-          </Link>
+
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ width: '100%', height: '50px' }}>
+            Подать заявку
+          </button>
         </form>
       </div>
     </>

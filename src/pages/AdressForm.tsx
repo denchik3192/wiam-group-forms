@@ -1,33 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getCategory } from '../api/formsAPI';
 import Loader from '../components/Loader';
 
 function AdressForm({ state, dispatch, categories }) {
-  const [workPlaces, setWorkPlaces] = useState<string[] | undefined>();
+  const [activeWorkPlace, setActiveWorkPlace] = useState<string>('');
+  const [adress, setAdress] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
-  console.log(state);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await getCategory();
-        setWorkPlaces(response);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  // const handleSubmit = () => {
-  //   navigate('/loan-form');
-  // };
+  const handleSubmit = () => {
+    dispatch({
+      type: 'set_adress',
+      workPlace: activeWorkPlace,
+      adress: adress,
+    });
+    navigate('adress-form');
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -45,9 +33,10 @@ function AdressForm({ state, dispatch, categories }) {
               className="form-select"
               aria-label="Default select example"
               style={{ marginBottom: '20px' }}
+              onChange={(e) => setActiveWorkPlace(e.target.value)}
               required>
-              {workPlaces?.map((workplace: string, index: number) => (
-                <option key={index} value={index}>
+              {categories?.map((workplace: string, index: number) => (
+                <option key={index} value={workplace}>
                   {workplace}
                 </option>
               ))}
@@ -61,10 +50,11 @@ function AdressForm({ state, dispatch, categories }) {
               className="form-control"
               id="adress"
               placeholder="Адрес проживания"
+              onChange={(e) => setAdress(e.target.value)}
               required
             />
           </div>
-          <div style={{ display: 'flex', flex: '1 0 auto' }}>
+          <div className="button-block">
             <Link to={'/'}>
               <button type="submit" className="btn btn-secondary">
                 Назад
@@ -73,6 +63,7 @@ function AdressForm({ state, dispatch, categories }) {
             <Link to={'/loan-form'}>
               <button
                 type="submit"
+                onClick={handleSubmit}
                 className="btn btn-primary"
                 style={{ width: '100%', marginLeft: '10px' }}>
                 Далее
