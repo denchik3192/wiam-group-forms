@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RootState, useAppDispatch } from '../store/store';
 import { getItems, setPersonalData } from '../store/slices/formSlice';
-import { getCategories } from '../api/formsAPI';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function PersonalDatatForm() {
-  const { personalData } = useSelector((state: RootState) => state.forms);
+  const { personalData } = useSelector((state) => state.forms);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const [phone, setPhone] = useState<string>(personalData.phone);
-  const [name, setName] = useState<string>(personalData.name);
-  const [lastName, setLastName] = useState<string>(personalData.lastName);
-  const [gender, setGender] = useState<string>(personalData.gender);
+  const dispatch = useDispatch();
+  const [phone, setPhone] = useState(personalData.phone);
+  const [name, setName] = useState(personalData.name);
+  const [lastName, setLastName] = useState(personalData.lastName);
+  const [gender, setGender] = useState(personalData.gender);
 
   useEffect(() => {
     dispatch(getItems());
-  }, []);
+  }, [dispatch]);
 
   const handleSubmit = () => {
     dispatch(

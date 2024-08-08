@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import Modal from '../components/modal';
-import { RootState, useAppDispatch } from '../store/store';
-import { useSelector } from 'react-redux';
-import { postForms, setLoan } from '../store/slices/formSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoan } from '../store/slices/formSlice';
 import { postFormsData } from '../api/formsAPI';
 
 function LoanForm() {
-  const { loanData, personalData } = useSelector((state: RootState) => state.forms);
-  const dispatch = useAppDispatch();
-  const [sum, setSum] = useState<number>(loanData.loan);
-  const [period, setPeriod] = useState<number>(loanData.period);
-  const [isModalActive, setIsModalActive] = useState<boolean>(false);
+  const { loanData, personalData } = useSelector((state) => state.forms);
+  const dispatch = useDispatch();
+  const [sum, setSum] = useState(loanData.loan);
+  const [period, setPeriod] = useState(loanData.period);
+  const [isModalActive, setIsModalActive] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +43,7 @@ function LoanForm() {
               id="sum"
               value={sum}
               required
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setSum(e.target.value);
               }}
             />
@@ -62,7 +61,7 @@ function LoanForm() {
               step={1}
               id="period"
               value={period}
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setPeriod(e.target.value);
               }}
             />

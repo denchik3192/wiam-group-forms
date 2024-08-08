@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAdressData } from '../store/slices/formSlice';
 
 function AdressForm() {
-  const { adressData } = useSelector((state: RootState) => state.forms);
-  const dispatch = useAppDispatch();
-  const [activeWorkPlace, setActiveWorkPlace] = useState<string>('beauty');
-  const [adress, setAdress] = useState<string>(adressData.adress);
+  const { adressData } = useSelector((state) => state.forms);
+  const dispatch = useDispatch();
+  const [activeWorkPlace, setActiveWorkPlace] = useState('beauty');
+  const [adress, setAdress] = useState(adressData.adress);
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -30,7 +29,7 @@ function AdressForm() {
               style={{ marginBottom: '20px' }}
               onChange={(e) => setActiveWorkPlace(e.target.value)}
               required>
-              {adressData.categories?.map((workplace: string, index: number) => (
+              {adressData.categories?.map((workplace, index) => (
                 <option key={index} value={workplace}>
                   {workplace}
                 </option>
