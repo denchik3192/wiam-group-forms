@@ -13,14 +13,14 @@ function AdressForm() {
 
   const handleSubmit = () => {
     dispatch(setAdressData({ workPlace: activeWorkPlace, adress: adress }));
-    navigate('loan-form');
+    navigate('/loan-form');
   };
 
   return (
     <>
       <div className="formWrapper">
         <h1>Адрес и место работы</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-group" style={{ marginBottom: '30px' }}>
             <label>Место работы</label>
             <select
@@ -56,15 +56,9 @@ function AdressForm() {
                 Назад
               </button>
             </Link>
-            <Link to={'/loan-form'} style={{ width: '100%', marginLeft: '10px' }}>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{ width: '100%' }}
-                onClick={handleSubmit}>
-                Далее
-              </button>
-            </Link>
+            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+              Далее
+            </button>
           </div>
         </form>
       </div>

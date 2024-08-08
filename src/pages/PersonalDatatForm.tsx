@@ -15,7 +15,7 @@ function PersonalDatatForm() {
   const [gender, setGender] = useState<string>(personalData.gender);
 
   useEffect(() => {
-    // dispatch(getItems());
+    dispatch(getItems());
   }, []);
 
   const handleSubmit = () => {

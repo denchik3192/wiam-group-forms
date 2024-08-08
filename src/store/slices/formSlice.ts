@@ -6,28 +6,30 @@ export const getItems = createAsyncThunk('forms/fetchCategories', async (_, reje
 
     try {
         const response = await fetch('https://dummyjson.com/products/category-list');
-        return response.json();
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-export const postForms = createAsyncThunk('forms/postForms', async <any>({ data }, rejectedWithValue) => {
-
-    try {
-        const response = await fetch('https://dummyjson.com/products/add', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                "title": data.name + ' ' + data.lastName
-            })
-        })
+        console.log(response);
 
         return response.json();
     } catch (error) {
         console.log(error);
     }
 });
+
+// export const postForms = createAsyncThunk('forms/postForms', async <any>({ data }, rejectedWithValue) => {
+
+//     try {
+//         const response = await fetch('https://dummyjson.com/products/add', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({
+//                 "title": data.name + ' ' + data.lastName
+//             })
+//         })
+
+//         return response.json();
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
 
 
 const initialState = {
@@ -88,20 +90,20 @@ const formSlice = createSlice({
             state.status = 'rejected';
             state.adressData.categories = [];
         })
-        builder.addCase(postForms.pending, (state) => {
-            state.status = 'loading';
+        // builder.addCase(postForms.pending, (state) => {
+        //     state.status = 'loading';
 
-        })
-        builder.addCase(postForms.fulfilled, (state, action) => {
-            console.log(action.payload);
+        // })
+        // builder.addCase(postForms.fulfilled, (state, action) => {
+        //     console.log(action.payload);
 
-            state.status = 'sucsess';
+        //     state.status = 'sucsess';
 
-        })
-        builder.addCase(postForms.rejected, (state) => {
-            state.status = 'rejected';
+        // })
+        // builder.addCase(postForms.rejected, (state) => {
+        //     state.status = 'rejected';
 
-        })
+        // })
     },
 });
 

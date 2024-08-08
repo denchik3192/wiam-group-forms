@@ -1,4 +1,6 @@
-function Modal() {
+function Modal({ personalData, loanData, setIsModalActive }) {
+  console.log(personalData.name);
+
   return (
     <div
       style={{
@@ -10,9 +12,27 @@ function Modal() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '',
       }}>
-      <h3>modal</h3>
+      <div
+        style={{
+          width: '800px',
+          height: '500px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          border: '1px solid gray',
+          background: 'white',
+          borderRadius: '15px',
+        }}>
+        <h2>
+          Поздравляем,{personalData.name} {personalData.lastName}.
+        </h2>
+        <h3>
+          {' '}
+          Вам одобрена {loanData.loan} на {loanData.period} день/дней.
+        </h3>
+      </div>
     </div>
   );
 }
