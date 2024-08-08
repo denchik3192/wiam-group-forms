@@ -1,3 +1,14 @@
+# wiam-group-forms
+
+## Установка
+
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/denchik3192/wiam-group-forms
+2.  npm install
+# Запуск 
+npm run dev
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
